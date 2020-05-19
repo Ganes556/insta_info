@@ -1,9 +1,9 @@
 from bs4 import BeautifulSoup
 import requests
-def scrapeInstagram(soup1):
+def scrapeInstagram(soup1,url):
     data = soup1.find(name="meta",attrs={"property":"og:description"})
     data_info = data['content'].split()
-    if '"is_private":true' in soup1.text:
+    if '"overall_category_name":null,"is_private":true' in url.text:
         private_or_not = "Private"
     else:
         private_or_not = "Not Private"
@@ -24,8 +24,8 @@ def decor(textnya):
         )
     
 if __name__ == '__main__':
-    username_instagram = "stackfunseventeen"
+    username_instagram = input("username >> ")
     get_url = requests.get("https://www.instagram.com/"+username_instagram)
     soup1 = BeautifulSoup(get_url.content,"lxml")
-    data = scrapeInstagram(soup1) 
+    data = scrapeInstagram(soup1,get_url) 
     output(data,username_instagram) 
